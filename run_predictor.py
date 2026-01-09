@@ -55,7 +55,7 @@ if __name__ == "__main__":
         print(f"✅ AI Model '{MODEL_FILE}' loaded successfully.")
     except FileNotFoundError:
         print(f"❌ Error: '{MODEL_FILE}' not found.")
-        print("Please run the 'train_real_model.py' script first to create the model file.")
+        print("Please run the 'src/models/train_real_model.py' script first to create the model file.")
         exit()
 
     # Loop to allow for multiple predictions

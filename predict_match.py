@@ -49,7 +49,7 @@ if __name__ == "__main__":
         print("✅ AI model and player stats loaded successfully.")
     except FileNotFoundError:
         print("❌ Error: Model or stats file not found.")
-        print("Please run the 'train_h2h_model.py' script first.")
+        print("Please run the 'src/models/train_h2h.py' script first.")
         exit()
 
     while True:

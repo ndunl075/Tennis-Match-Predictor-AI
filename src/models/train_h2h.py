@@ -3,12 +3,18 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 import joblib
 import glob
+import os
+
+# Get the project root directory (two levels up from this script)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(script_dir))
 
 print("--- Starting Head-to-Head AI Model Training ---")
 
 # Step 1: Load and Combine All Match Data
 print("Step 1: Loading all ATP match data...")
-all_files = glob.glob('atp_matches_*.csv')
+data_dir = os.path.join(project_root, 'data', 'raw')
+all_files = glob.glob(os.path.join(data_dir, 'atp_matches_*.csv'))
 df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
 print(f"✅ Loaded {len(df)} matches.")
 
@@ -54,7 +60,9 @@ losers_df = df_clean[['surface', 'loser_name', 'l_ace', 'l_df', 'l_1stIn', 'l_sv
 player_df = pd.concat([winners_df, losers_df])
 # Group by player and surface to get their average stats
 player_avg_stats = player_df.groupby(['player', 'surface']).mean().reset_index()
-player_avg_stats.to_csv('player_avg_stats.csv', index=False)
+# Save to root directory
+output_path = os.path.join(project_root, 'player_avg_stats.csv')
+player_avg_stats.to_csv(output_path, index=False)
 
 # Step 5: Train and Save the Head-to-Head Model
 print("Step 5: Training and saving the new H2H model...")
@@ -65,5 +73,8 @@ y = h2h_df['outcome']
 h2h_model = DecisionTreeClassifier(max_depth=5, random_state=42)
 h2h_model.fit(X, y)
 
-joblib.dump(h2h_model, 'h2h_model.joblib')
+# Save to root directory
+model_path = os.path.join(project_root, 'h2h_model.joblib')
+joblib.dump(h2h_model, model_path)
 print("\n🎉 SUCCESS! Head-to-head model and player stats are saved.")
+

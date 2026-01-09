@@ -12,7 +12,7 @@ try:
     PLAYER_NAMES = sorted(player_stats_df['player'].unique())
 except FileNotFoundError:
     # This will show an error in the terminal if the files are missing.
-    print("Error: Model or stats file not found! Run 'train_h2h_model.py' first.")
+    print("Error: Model or stats file not found! Run 'src/models/train_h2h.py' first.")
     exit()
 
 # --- Prediction Function ---

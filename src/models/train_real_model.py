@@ -3,13 +3,19 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 import joblib
 import glob # This library helps find files
+import os
+
+# Get the project root directory (two levels up from this script)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(script_dir))
 
 print("--- Starting AI Model Training on Real ATP Data ---")
 
 # Part 1: Load and Combine All Match Data
 # This finds all CSV files in the folder that start with 'atp_matches_'
 print("Step 1: Finding and loading all ATP match CSV files...")
-all_files = glob.glob('atp_matches_*.csv')
+data_dir = os.path.join(project_root, 'data', 'raw')
+all_files = glob.glob(os.path.join(data_dir, 'atp_matches_*.csv'))
 df_list = []
 for filename in all_files:
     # We read each file and add it to our list
@@ -80,5 +86,8 @@ print("-" * 50)
 
 # Part 5: Save the Trained Model
 print("Step 5: Saving the final model to a file...")
-joblib.dump(final_model, 'real_tennis_model.joblib')
+# Save to root directory
+model_path = os.path.join(project_root, 'real_tennis_model.joblib')
+joblib.dump(final_model, model_path)
 print("\n🎉 SUCCESS! Your AI is trained on real matches and saved as 'real_tennis_model.joblib'.")
+

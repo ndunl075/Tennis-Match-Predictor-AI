@@ -25,7 +25,7 @@ st.title("🎾 Tennis Match Predictor AI")
 st.write("Enter two player names and a surface to predict the winner based on historical data.")
 
 if h2h_model is None or player_stats_df is None:
-    st.error("Error: Model or stats file not found! Please run the 'train_h2h_model.py' script first.")
+    st.error("Error: Model or stats file not found! Please run the 'src/models/train_h2h.py' script first.")
 else:
     # Get a sorted list of unique player names for the dropdowns
     player_names = sorted(player_stats_df['player'].unique())
